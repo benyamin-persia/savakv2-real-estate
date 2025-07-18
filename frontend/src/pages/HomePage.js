@@ -4,6 +4,7 @@ import LeafletMap from '../components/LeafletMap';
 import { MiniMapPicker } from '../components/LeafletMap';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import { FaUpload, FaPlus, FaTimes, FaSave } from 'react-icons/fa';
 import Mascot from '../components/Mascot';
 
