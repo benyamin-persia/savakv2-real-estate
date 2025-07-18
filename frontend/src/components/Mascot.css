@@ -1,0 +1,173 @@
+.mascot-container {
+  position: fixed;
+  z-index: 1000;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.mascot-container.mascot-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.mascot {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  border: 3px solid #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.mascot-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.mascot-speech-bubble {
+  position: absolute;
+  background: white;
+  border-radius: 20px;
+  padding: 12px 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  max-width: 200px;
+  white-space: nowrap;
+  animation: bubblePop 0.3s ease-out;
+}
+
+/* Position classes */
+.mascot-top-left {
+  top: 20px;
+  left: 20px;
+}
+
+.mascot-top-right {
+  top: 20px;
+  right: 20px;
+}
+
+.mascot-bottom-left {
+  bottom: 20px;
+  left: 20px;
+}
+
+.mascot-bottom-right {
+  bottom: 20px;
+  right: 20px;
+}
+
+.mascot-center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Animation classes */
+.mascot-idle {
+  animation: mascotIdle 3s ease-in-out infinite;
+}
+
+.mascot-peek {
+  animation: mascotPeek 2s ease-in-out infinite;
+}
+
+.mascot-bounce {
+  animation: mascotBounce 1s ease-in-out infinite;
+}
+
+.mascot-think {
+  animation: mascotThink 2s ease-in-out infinite;
+}
+
+.mascot-point {
+  animation: mascotPoint 1.5s ease-in-out infinite;
+}
+
+/* Keyframe animations */
+@keyframes mascotIdle {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes mascotPeek {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes mascotBounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes mascotThink {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
+@keyframes mascotPoint {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(10px); }
+}
+
+@keyframes bubblePop {
+  0% { 
+    opacity: 0;
+    transform: scale(0.5) translateY(10px);
+  }
+  100% { 
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Speech bubble positioning */
+.mascot-top-left .mascot-speech-bubble,
+.mascot-bottom-left .mascot-speech-bubble {
+  left: 100%;
+  margin-left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.mascot-top-right .mascot-speech-bubble,
+.mascot-bottom-right .mascot-speech-bubble {
+  right: 100%;
+  margin-right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.mascot-center .mascot-speech-bubble {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 10px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .mascot {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .mascot-speech-bubble {
+    font-size: 12px;
+    padding: 8px 12px;
+    max-width: 150px;
+  }
+} 

@@ -4,8 +4,8 @@ import LeafletMap from '../components/LeafletMap';
 import { MiniMapPicker } from '../components/LeafletMap';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import { FaUpload, FaPlus, FaTimes, FaSave } from 'react-icons/fa';
+import Mascot from '../components/Mascot';
 
 // Set overflow: hidden on the body
 if (typeof document !== 'undefined') {
@@ -117,6 +117,8 @@ const HomePage = () => {
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [selectedListing, setSelectedListing] = useState(null);
   const [fullImage, setFullImage] = useState(null);
+  const [mascotStatus, setMascotStatus] = useState('idle');
+  const [showMascot, setShowMascot] = useState(true);
 
   useEffect(() => {
     setMapCenter([32.4279, 53.6880]);
@@ -447,6 +449,55 @@ const HomePage = () => {
       setUploadingImages(false);
     }
   };
+
+  // Handle mascot interactions
+  const handleMascotInteraction = (status) => {
+    console.log('Mascot interaction:', status);
+    
+    // Different mascot responses based on status
+    switch (status) {
+      case 'peeking':
+        setMascotStatus('thinking');
+        setTimeout(() => setMascotStatus('idle'), 3000);
+        break;
+      case 'excited':
+        setMascotStatus('pointing');
+        setTimeout(() => setMascotStatus('idle'), 2000);
+        break;
+      default:
+        setMascotStatus('idle');
+    }
+  };
+
+  // Show mascot when user creates a listing
+  useEffect(() => {
+    if (successMessage.includes('successfully!')) {
+      setMascotStatus('excited');
+      setTimeout(() => setMascotStatus('idle'), 3000);
+    }
+  }, [successMessage]);
+
+  // Show mascot when user hovers over map
+  useEffect(() => {
+    const mapElement = document.querySelector('.leaflet-container');
+    if (mapElement) {
+      const handleMapHover = () => {
+        setMascotStatus('peeking');
+      };
+      
+      const handleMapLeave = () => {
+        setMascotStatus('idle');
+      };
+      
+      mapElement.addEventListener('mouseenter', handleMapHover);
+      mapElement.addEventListener('mouseleave', handleMapLeave);
+      
+      return () => {
+        mapElement.removeEventListener('mouseenter', handleMapHover);
+        mapElement.removeEventListener('mouseleave', handleMapLeave);
+      };
+    }
+  }, []);
 
   // Handle logout
   const handleLogout = async () => {
@@ -1730,6 +1781,17 @@ const HomePage = () => {
             </div>
           )}
         </div>
+      )}
+      
+      {/* Mascot Component */}
+      {showMascot && (
+        <Mascot
+          status={mascotStatus}
+          position="bottom-right"
+          onInteraction={handleMascotInteraction}
+          showOnHover={true}
+          targetElement=".leaflet-container"
+        />
       )}
     </div>
   );
